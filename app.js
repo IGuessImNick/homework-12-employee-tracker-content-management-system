@@ -10,12 +10,12 @@ connection.connect(function (err) {
   init();
 });
 
-// welcome
+// welcome message
 function init() {
   console.log(`Welcome to the Employee Management System (EMS)`)
   userInput();
 }
-// what would you like to do?
+// wwyltd - what would you like to do? prompts for functionality
 function userInput() {
   inquirer.prompt([{
     type: "list",
@@ -76,7 +76,8 @@ function userInput() {
     }
   })
 }
-// view employees
+
+// view departments
 function viewDepartments() {
   console.log("Selecting all departments...\n");
   connection.query("SELECT id AS `ID`, department AS `Department` FROM departments", function (err, res) {
@@ -84,10 +85,10 @@ function viewDepartments() {
     // Log all results of the SELECT statement
     console.table(res);
     areYouFinished();
-
   });
 }
 
+// view employee roles
 function viewRoles() {
   console.log("Selecting all roles...\n");
   connection.query("SELECT title AS `Title`, salary AS `Salary`, depId AS `Department Id` FROM roles", function (err, res) {
@@ -95,10 +96,10 @@ function viewRoles() {
     // Log all results of the SELECT statement
     console.table(res);
     areYouFinished();
-
   });
 }
 
+// view employees
 function viewEmployee() {
   console.log("Selecting all employees...\n");
   connection.query("SELECT id AS `ID`, firstName AS `First Name`, lastName AS `Last Name`, roleId AS `Role Id`, managerId AS `Manager ID` FROM employees", function (err, res) {
@@ -109,16 +110,14 @@ function viewEmployee() {
   });
 }
 
-// add employee, department, role
+// update roles with a new role
 function updateRole() {
-  // we need to get the role data
   connection.query("SELECT * FROM roles", function (err, res) {
     if (err) throw err;
     const roles = res.map(element => {
       return element.id
     })
-    inquirer
-      .prompt([
+    inquirer.prompt([
         {
           name: "firstName",
           type: "input",
