@@ -153,6 +153,7 @@ function updateRole() {
   })
 }
 
+// add a new employee
 function addEmployee() {
   connection.query("SELECT id, title from roles", function (err, res) {
     if (err) throw err;
@@ -196,13 +197,11 @@ function addEmployee() {
         console.log(`${newEmployee.firstName} was added successfully`);
         areYouFinished();
       })
-
     })
-
   })
-
 }
 
+// update an employee with a new role. If role does not exist, first addRoles()
 function updateEmployee() {
   connection.query("Select * from employees", function (err, res) {
     if (err) throw err;
@@ -244,6 +243,7 @@ function updateEmployee() {
   })
 }
 
+// add a new department 
 function addDepartment() {
   // we need to get the role data
   connection.query("SELECT * FROM departments", function (err, res) {
@@ -276,6 +276,7 @@ function addDepartment() {
   })
 }
 
+// add a new role to a specified department
 function addRoles() {
   // we need to get the role data
   connection.query("SELECT * FROM departments", function (err, res) {
@@ -320,13 +321,15 @@ function addRoles() {
   })
 }
 
+// prompts user after each input to finish or continue
 function areYouFinished() {
   inquirer.prompt([
     {
       type: "list",
       name: "continue",
       message: "Would you like to continue working?",
-      choices: [
+      choices: 
+      [
         {
           name: "Yes",
           value: true
